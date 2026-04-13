@@ -46,9 +46,12 @@ def create_exercise():
         exercise = Exercise(**validated)
         db.session.add(exercise)
         db.session.commit()
-    except (ValueError, IntegrityError) as err:
+    except ValueError as err:
         db.session.rollback()
         return make_response(jsonify({"error": str(err)}), 422)
+    except IntegrityError:
+        db.session.rollback()
+        return make_response(jsonify({"error": "An exercise with that name already exists."}), 422)
 
     return make_response(jsonify(exercise_schema.dump(exercise)), 201)
 
@@ -90,7 +93,7 @@ def create_workout():
         workout = Workout(**validated)
         db.session.add(workout)
         db.session.commit()
-    except (ValueError, IntegrityError) as err:
+    except ValueError as err:
         db.session.rollback()
         return make_response(jsonify({"error": str(err)}), 422)
 
@@ -137,9 +140,14 @@ def create_workout_exercise(workout_id, exercise_id):
         )
         db.session.add(workout_exercise)
         db.session.commit()
-    except (ValueError, IntegrityError) as err:
+    except ValueError as err:
         db.session.rollback()
         return make_response(jsonify({"error": str(err)}), 422)
+    except IntegrityError:
+        db.session.rollback()
+        return make_response(
+            jsonify({"error": "This exercise is already added to the workout."}), 422
+        )
 
     return make_response(jsonify(workout_exercise_schema.dump(workout_exercise)), 201)
 
