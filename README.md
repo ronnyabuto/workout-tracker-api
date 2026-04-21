@@ -23,11 +23,9 @@ A RESTful backend API for a personal trainer workout tracking application. Built
    cd server
    ```
 
-4. **Initialize and apply the database migrations:**
+4. **Apply the database migrations to create all tables:**
    ```bash
-   flask db init        # only needed if the migrations/ folder is absent
-   flask db migrate -m "Initial models"
-   flask db upgrade head
+   flask db upgrade
    ```
 
 5. **Seed the database with example data:**
