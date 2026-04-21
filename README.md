@@ -8,7 +8,7 @@ A RESTful backend API for a personal trainer workout tracking application. Built
 
 1. **Clone the repository and navigate into the project folder:**
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/ronnyabuto/workout-tracker-api.git
    cd workout-tracker-api
    ```
 
